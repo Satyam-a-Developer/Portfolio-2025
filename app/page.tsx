@@ -10,6 +10,7 @@ import { RiPagesLine } from "react-icons/ri";
 import dsasorting from "../public/dsasorting.png";
 import excel from "../public/excel.png";
 import notes from "../public/Notes.png";
+import financeGo from "../public/FinanceGo.png";
 import gamble from "../public/gamble.png";
 
 export default function Home() {
@@ -58,18 +59,18 @@ export default function Home() {
   }, []);
 
   // Helper function to add refs to projectRefs array
-  const addToRefs = (el : HTMLDivElement | null) => {
+  const addToRefs = (el: HTMLDivElement | null) => {
     if (el && !projectRefs.current.includes(el)) {
       projectRefs.current.push(el);
     }
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 font-sans">
       <div className="flex flex-col gap-8 items-center text-center">
         {/* Main Header */}
         <div className="flex flex-col gap-8 text-center min-h-screen items-center justify-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-800">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800">
             Hello Developer, I am{" "}
             <span
               ref={Name}
@@ -119,47 +120,113 @@ export default function Home() {
             <h1 className="text-4xl font-semibold text-gray-700">My Projects</h1>
           </div>
           <div className="flex flex-col gap-24">
+            {/* Project 1 */}
             <div 
               ref={addToRefs}
               className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
             >
               <Image src={notes} alt="Notes" width={300} height={300} className="rounded-lg shadow-lg" />
               <div className="text-left">
-                <h2 className="text-2xl font-bold mb-4">Notes App</h2>
-                <p className="text-gray-600">Description of your notes project goes here...</p>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Notes App</h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Notes App is a project that aims to create a productivity tool, including Notes, Notebooks, and Todos.
+                </p>
+                <a
+                  href="https://github.com/Satyam-a-Developer/Gamble-Project"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline transition duration-300"
+                >
+                  View Project
+                </a>
               </div>
             </div>
 
+            {/* Project 2 */}
             <div 
               ref={addToRefs}
               className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0"
             >
               <Image src={gamble} alt="Gamble" width={300} height={300} className="rounded-lg shadow-lg" />
               <div className="text-left">
-                <h2 className="text-2xl font-bold mb-4">Gamble Project</h2>
-                <p className="text-gray-600">Description of your gamble project goes here...</p>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Gamble Project</h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Gamble is a gambling application project that includes various gambling games for users to try their luck.
+                </p>
+                <a
+                  href="https://notes-app-psi-ten.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline transition duration-300"
+                >
+                  View Project
+                </a>
               </div>
             </div>
 
+            {/* Project 3 */}
             <div 
               ref={addToRefs}
               className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
             >
               <Image src={excel} alt="Excel" width={300} height={300} className="rounded-lg shadow-lg" />
               <div className="text-left">
-                <h2 className="text-2xl font-bold mb-4">Excel Clone</h2>
-                <p className="text-gray-600">Description of your excel project goes here...</p>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Excel Clone</h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  Excel Clone is a project that replicates the functionality of Excel, allowing users to input data and perform calculations.
+                </p>
+                <a
+                  href="https://excel-sheet-344l.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline transition duration-300"
+                >
+                  View Project
+                </a>
               </div>
             </div>
 
+            {/* Project 4 */}
             <div 
               ref={addToRefs}
               className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0"
             >
-              <Image src={dsasorting} alt="DSA" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={dsasorting} alt="DSA Sorting" width={300} height={300} className="rounded-lg shadow-lg" />
               <div className="text-left">
-                <h2 className="text-2xl font-bold mb-4">DSA Sorting Visualizer</h2>
-                <p className="text-gray-600">Description of your DSA project goes here...</p>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">DSA Sorting Visualizer</h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  This project demonstrates sorting algorithms, visualizing each step to make understanding DSA algorithms easier.
+                </p>
+                <a
+                  href="https://dsa-sorting-algo-zlls.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline transition duration-300"
+                >
+                  View Project
+                </a>
+              </div>
+            </div>
+
+            {/* Project 5 */}
+            <div 
+              ref={addToRefs}
+              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
+            >
+              <Image src={financeGo} alt="FinanceGo" width={300} height={300} className="rounded-lg shadow-lg" />
+              <div className="text-left">
+                <h2 className="text-2xl font-semibold text-gray-800 mb-4">FinanceGo</h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  FinanceGo helps you manage your financial data with features such as budgeting, investment tracking, and expense analysis.
+                </p>
+                <a
+                  href="https://finance-go-frontend.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline transition duration-300"
+                >
+                  View Project
+                </a>
               </div>
             </div>
           </div>
