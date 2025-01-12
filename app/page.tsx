@@ -23,7 +23,7 @@ export default function Home() {
     // Name animation
     if (Name.current) {
       gsap.to(Name.current, {
-        duration: 1,
+        duration: 0.2,
         opacity: 3,
         ease: "power1.inOut",
       });
@@ -40,14 +40,13 @@ export default function Home() {
         {
           opacity: 3,
           y: 0,
-          duration: 1,
+          duration: 0.4,
           ease: "power2.out",
           scrollTrigger: {
             trigger: project,
             start: "top bottom-=100",
             end: "bottom center",
             toggleActions: "play none none reverse",
-            markers: false, // Set to true for debugging
           },
         }
       );
@@ -66,7 +65,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen pb-20 font-sans">
+    <div className="min-h-screen pb-20 font-sans ">
       <div className="flex flex-col gap-8 items-center text-center">
         {/* Main Header */}
         <div className="flex flex-col gap-8 text-center min-h-screen items-center justify-center">
@@ -115,7 +114,7 @@ export default function Home() {
         </div>
 
         {/* Projects Section */}
-        <div className="w-full max-w-6xl px-4">
+        <div className="w-full max-w-6xl px-4 mb-10">
           <div className="project-name mb-16">
             <h1 className="text-4xl font-semibold text-gray-700">My Projects</h1>
           </div>
@@ -123,9 +122,9 @@ export default function Home() {
             {/* Project 1 */}
             <div 
               ref={addToRefs}
-              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
+              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0 hover:scale-105 transition-transform duration-300"
             >
-              <Image src={notes} alt="Notes" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={notes} alt="Notes" width={300} height={300} className="rounded-lg shadow-xl transform transition duration-500 hover:shadow-2xl" />
               <div className="text-left">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Notes App</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
@@ -145,9 +144,9 @@ export default function Home() {
             {/* Project 2 */}
             <div 
               ref={addToRefs}
-              className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0"
+              className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0 hover:scale-105 transition-transform duration-300"
             >
-              <Image src={gamble} alt="Gamble" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={gamble} alt="Gamble" width={300} height={300} className="rounded-lg shadow-xl transform transition duration-500 hover:shadow-2xl" />
               <div className="text-left">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Gamble Project</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
@@ -167,9 +166,9 @@ export default function Home() {
             {/* Project 3 */}
             <div 
               ref={addToRefs}
-              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
+              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0 hover:scale-105 transition-transform duration-300"
             >
-              <Image src={excel} alt="Excel" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={excel} alt="Excel" width={300} height={300} className="rounded-lg shadow-xl transform transition duration-500 hover:shadow-2xl" />
               <div className="text-left">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Excel Clone</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
@@ -189,9 +188,9 @@ export default function Home() {
             {/* Project 4 */}
             <div 
               ref={addToRefs}
-              className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0"
+              className="project-card flex flex-col md:flex-row-reverse items-center gap-8 opacity-0 hover:scale-105 transition-transform duration-300"
             >
-              <Image src={dsasorting} alt="DSA Sorting" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={dsasorting} alt="DSA Sorting" width={300} height={300} className="rounded-lg shadow-xl transform transition duration-500 hover:shadow-2xl" />
               <div className="text-left">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">DSA Sorting Visualizer</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
@@ -211,9 +210,9 @@ export default function Home() {
             {/* Project 5 */}
             <div 
               ref={addToRefs}
-              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0"
+              className="project-card flex flex-col md:flex-row items-center gap-8 opacity-0 hover:scale-105 transition-transform duration-300"
             >
-              <Image src={financeGo} alt="FinanceGo" width={300} height={300} className="rounded-lg shadow-lg" />
+              <Image src={financeGo} alt="FinanceGo" width={300} height={300} className="rounded-lg shadow-xl transform transition duration-500 hover:shadow-2xl" />
               <div className="text-left">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">FinanceGo</h2>
                 <p className="text-lg text-gray-600 leading-relaxed">
