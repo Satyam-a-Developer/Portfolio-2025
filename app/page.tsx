@@ -29,7 +29,7 @@ export default function Home() {
     }
 
     // Project animations
-    projectRefs.current.forEach((project, index) => {
+    projectRefs.current.forEach((project) => {
       gsap.fromTo(
         project,
         {
@@ -58,7 +58,7 @@ export default function Home() {
   }, []);
 
   // Helper function to add refs to projectRefs array
-  const addToRefs = (el:any) => {
+  const addToRefs = (el : HTMLDivElement | null) => {
     if (el && !projectRefs.current.includes(el)) {
       projectRefs.current.push(el);
     }
