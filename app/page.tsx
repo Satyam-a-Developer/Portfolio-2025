@@ -96,12 +96,10 @@ export default function Home() {
         delay: 0.3
       });
 
-      // Add hover animations
       icons.forEach((icon) => {
         icon.addEventListener('mouseenter', () => {
           gsap.to(icon, {
-            scale: 1.2,
-            rotate: 360,
+            scale:1.5,
             duration: 0.4,
             ease: "back.out(1.7)"
           });
@@ -110,7 +108,6 @@ export default function Home() {
         icon.addEventListener('mouseleave', () => {
           gsap.to(icon, {
             scale: 1,
-            rotate: 0,
             duration: 0.4,
             ease: "power2.out"
           });
