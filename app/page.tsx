@@ -152,7 +152,7 @@ export default function Home() {
     }
   };
 
-  const renderProject = (project: Project, index: number) => (
+  const renderProject = (project: Project) => (
     <div 
       key={project.title}
       ref={addToRefs}
@@ -248,7 +248,7 @@ export default function Home() {
             <h1 className="text-4xl font-semibold text-gray-700">My Projects</h1>
           </div>
           <div className="flex flex-col gap-24">
-            {projects.map((project, index) => renderProject(project, index))}
+            {projects.map((project) => renderProject(project))}
           </div>
         </div>
       </div>
