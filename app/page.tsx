@@ -233,7 +233,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 shadow-[-2px_9px_64px_9px_rgba(34,_197,_94,_0.5)]">
+      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 ">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <a href="#" className="text-2xl font-extrabold text-teal-600">
             Satyam Joshi
@@ -282,7 +282,7 @@ export default function Home() {
       <header ref={headerRef} id="home" className="pt-36 pb-28 text-center bg-gradient-to-b from-teal-50 to-gray-100">
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Hey, I'm{" "}
+            Hey, I&apos;m{" "}
             <span ref={nameRef} className="text-teal-600">
               Satyam Joshi
             </span>
@@ -326,7 +326,7 @@ export default function Home() {
             <div className="w-full md:w-2/3 space-y-6">
               <h3 className="text-2xl font-semibold text-teal-600">Full Stack Developer & UI/UX Designer</h3>
               <p className="text-lg leading-relaxed text-gray-700">
-                I'm Satyam Joshi, a passionate developer dedicated to creating intuitive and impactful web applications. With proficiency in both frontend and backend technologies, I thrive on turning complex challenges into elegant, user-centric solutions.
+                I&apos;m Satyam Joshi, a passionate developer dedicated to creating intuitive and impactful web applications. With proficiency in both frontend and backend technologies, I thrive on turning complex challenges into elegant, user-centric solutions.
               </p>
               <p className="text-lg leading-relaxed text-gray-700">
                 Specializing in modern frameworks like React and Next.js, I design responsive interfaces paired with robust server-side logic to deliver exceptional user experiences across all platforms.
