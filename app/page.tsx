@@ -13,6 +13,7 @@ import excel from "../public/excel.png";
 import notes from "../public/Notes.png";
 import financeGo from "../public/FinanceGo.png";
 import gamble from "../public/gamble.png";
+import crypto from "../public/Crypto-exchange.png";
 import profile from "../public/profile.jpeg";
 
 // Project interface
@@ -69,6 +70,18 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    title: "Crypto-exchange",
+    description:
+      "Get way for your cryptocurrency investments",
+    image: crypto,
+    link: "https://crypto-exchange-plum.vercel.app/",
+    github: "https://github.com/Satyam-a-Developer/crypto-exchange",
+    altText: "Crypto Interface",
+    techStack: ["Next.js", "CSS","CoinDCX-API"],
+    isReversed: false,
+  },
+  {
+    id:4,
     title: "Excel Clone",
     description:
       "A fully functional Excel-like spreadsheet application with formula support and data visualization.",
@@ -77,10 +90,10 @@ const projects: Project[] = [
     github: "https://github.com/Satyam-a-Developer/Excel-Sheet",
     altText: "Spreadsheet Application",
     techStack: ["Next-JS", "CSS Grid", "TailwindCSS"],
-    isReversed: false,
+    isReversed: true,
   },
   {
-    id: 4,
+    id: 5,
     title: "DSA Sorting Visualizer",
     description:
       "An educational tool that visualizes various sorting algorithms with step-by-step animations.",
@@ -89,10 +102,10 @@ const projects: Project[] = [
     github: "https://github.com/Satyam-a-Developer/DSA-Sorting-Algo",
     altText: "Sorting Algorithm Visualizer",
     techStack: ["JavaScript", "Algorithm Design"],
-    isReversed: true,
+    isReversed: false,
   },
   {
-    id: 5,
+    id: 6,
     title: "FinanceGo",
     description:
       "A personal finance management tool with budgeting, investment tracking, and expense analysis features.",
@@ -101,7 +114,7 @@ const projects: Project[] = [
     github: "https://github.com/Satyam-a-Developer/Finance-Go",
     altText: "Finance Management Dashboard",
     techStack: ["Next.js", "Chart.js", "MongoDB"],
-    isReversed: false,
+    isReversed: true,
   },
 ];
 
@@ -119,38 +132,146 @@ export default function Home() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    gsap.fromTo(headerRef.current, { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" });
+    gsap.fromTo(
+      headerRef.current,
+      { y: -100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+    );
     if (nameRef.current) {
-      gsap.fromTo(nameRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "bounce.out", delay: 0.3 });
+      gsap.fromTo(
+        nameRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: "bounce.out", delay: 0.3 }
+      );
     }
     if (socialIconsRef.current) {
       const icons = Array.from(socialIconsRef.current.children);
-      gsap.from(icons, { opacity: 0, y: 30, duration: 0.8, stagger: 0.2, ease: "elastic.out(1, 0.8)", delay: 0.5 });
+      gsap.from(icons, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "elastic.out(1, 0.8)",
+        delay: 0.5,
+      });
       icons.forEach((icon) => {
-        icon.addEventListener("mouseenter", () => gsap.to(icon, { scale: 1.2, rotation: 10, duration: 0.3, ease: "power2.out" }));
-        icon.addEventListener("mouseleave", () => gsap.to(icon, { scale: 1, rotation: 0, duration: 0.3, ease: "power2.out" }));
+        icon.addEventListener("mouseenter", () =>
+          gsap.to(icon, {
+            scale: 1.2,
+            rotation: 10,
+            duration: 0.3,
+            ease: "power2.out",
+          })
+        );
+        icon.addEventListener("mouseleave", () =>
+          gsap.to(icon, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.3,
+            ease: "power2.out",
+          })
+        );
       });
     }
     if (aboutRef.current) {
-      gsap.fromTo(aboutRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: aboutRef.current, start: "top 80%", end: "bottom 20%" } });
+      gsap.fromTo(
+        aboutRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+          },
+        }
+      );
     }
     if (skillsRef.current) {
-      const skillCategories = skillsRef.current.querySelectorAll(".skill-category");
+      const skillCategories =
+        skillsRef.current.querySelectorAll(".skill-category");
       skillCategories.forEach((category, index) => {
-        gsap.fromTo(category, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: index * 0.2, ease: "power2.out", scrollTrigger: { trigger: skillsRef.current, start: "top 80%" } });
+        gsap.fromTo(
+          category,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: index * 0.2,
+            ease: "power2.out",
+            scrollTrigger: { trigger: skillsRef.current, start: "top 80%" },
+          }
+        );
       });
     }
     if (contactRef.current) {
-      gsap.fromTo(contactRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: contactRef.current, start: "top 80%" } });
+      gsap.fromTo(
+        contactRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: contactRef.current, start: "top 80%" },
+        }
+      );
     }
     projectRefs.current.forEach((project, index) => {
       if (project) {
         const image = project.querySelector(".project-image");
         const content = project.querySelector(".project-content");
         const direction = index % 2 === 0 ? -1 : 1;
-        gsap.fromTo(project, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", scrollTrigger: { trigger: project, start: "top 85%", toggleActions: "play none none reverse" } });
-        gsap.fromTo(image, { x: direction * 50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: "power3.out", scrollTrigger: { trigger: project, start: "top 85%", toggleActions: "play none none reverse" } });
-        gsap.fromTo(content, { x: -direction * 50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, delay: 0.4, ease: "power3.out", scrollTrigger: { trigger: project, start: "top 85%", toggleActions: "play none none reverse" } });
+        gsap.fromTo(
+          project,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: project,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+        gsap.fromTo(
+          image,
+          { x: direction * 50, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: project,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+        gsap.fromTo(
+          content,
+          { x: -direction * 50, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: 0.4,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: project,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
       }
     });
     const sections = ["home", "about", "projects", "skills", "contact"];
@@ -184,7 +305,11 @@ export default function Home() {
   }, []);
 
   const scrollToSection = (id: string) => {
-    gsap.to(window, { duration: 1, scrollTo: { y: `#${id}`, offsetY: 50 }, ease: "power3.inOut" });
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: { y: `#${id}`, offsetY: 50 },
+      ease: "power3.inOut",
+    });
   };
 
   const scrollToTop = () => {
@@ -199,17 +324,34 @@ export default function Home() {
     <div
       key={project.id}
       ref={addToRefs}
-      className={`project-card flex flex-col lg:flex-row ${project.isReversed ? "lg:flex-row-reverse" : ""} items-center gap-12 mb-24 p-8 rounded-2xl transition-all duration-500 hover:shadow-xl bg-white`}
+      className={`project-card flex flex-col lg:flex-row ${
+        project.isReversed ? "lg:flex-row-reverse" : ""
+      } items-center gap-12 mb-24 p-8 rounded-2xl transition-all duration-500 hover:shadow-xl bg-white`}
     >
       <div className="relative w-full lg:w-[500px] h-[320px] group project-image overflow-hidden rounded-xl shadow-lg">
-        <Image src={project.image} alt={project.altText} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+        <Image
+          src={project.image}
+          alt={project.altText}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-teal-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
           <div className="flex gap-4">
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="bg-teal-500 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-teal-600 transition-all duration-300 shadow-md">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-teal-500 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-teal-600 transition-all duration-300 shadow-md"
+            >
               Live Demo
             </a>
             {project.github && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="bg-gray-700 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-300 shadow-md">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gray-700 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-300 shadow-md"
+              >
                 View Code
               </a>
             )}
@@ -218,10 +360,15 @@ export default function Home() {
       </div>
       <div className="flex-1 space-y-5 project-content">
         <h2 className="text-3xl font-bold text-gray-900">{project.title}</h2>
-        <p className="text-gray-700 leading-relaxed text-lg">{project.description}</p>
+        <p className="text-gray-700 leading-relaxed text-lg">
+          {project.description}
+        </p>
         <div className="flex flex-wrap gap-3">
           {project.techStack.map((tech) => (
-            <span key={tech} className="px-4 py-1.5 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">
+            <span
+              key={tech}
+              className="px-4 py-1.5 bg-teal-100 text-teal-800 rounded-full text-sm font-medium"
+            >
               {tech}
             </span>
           ))}
@@ -231,9 +378,9 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative">
+    <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative ">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 ">
+      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 shadow-[1px_25px_59px_-6px_rgba(34,_197,_94,_0.5)]">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <a href="#" className="text-2xl font-extrabold text-teal-600">
             Satyam Joshi
@@ -267,11 +414,81 @@ export default function Home() {
                 activeSection === item ? "text-teal-600" : "text-gray-500"
               } transition-colors duration-300`}
             >
-              {item === "home" && <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>}
-              {item === "about" && <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>}
-              {item === "projects" && <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>}
-              {item === "skills" && <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>}
-              {item === "contact" && <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
+              {item === "home" && (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+              )}
+              {item === "about" && (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              )}
+              {item === "projects" && (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  />
+                </svg>
+              )}
+              {item === "skills" && (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
+                </svg>
+              )}
+              {item === "contact" && (
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              )}
               <span className="text-sm mt-1 capitalize">{item}</span>
             </button>
           ))}
@@ -279,7 +496,11 @@ export default function Home() {
       </div>
 
       {/* Header Section */}
-      <header ref={headerRef} id="home" className="pt-36 pb-28 text-center bg-gradient-to-b from-teal-50 to-gray-100">
+      <header
+        ref={headerRef}
+        id="home"
+        className="pt-36 pb-28 text-center bg-gradient-to-b from-teal-50 to-gray-100"
+      >
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
             Hey, I&apos;m{" "}
@@ -288,13 +509,40 @@ export default function Home() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto text-gray-700 font-light leading-relaxed">
-            Crafting seamless digital experiences as a Full Stack Developer & UI/UX Designer
+            Crafting seamless digital experiences as a Full Stack Developer &
+            UI/UX Designer
           </p>
-          <div ref={socialIconsRef} className="flex justify-center gap-8 mt-10 text-3xl text-gray-600">
-            <a href="https://github.com/Satyam-a-Developer" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub className="hover:text-teal-600 transition-colors duration-300" /></a>
-            <a href="https://x.com/Satyamjosh44160" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter className="hover:text-teal-600 transition-colors duration-300" /></a>
-            <a href="https://linkedin.com/in/satyam-joshi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin className="hover:text-teal-600 transition-colors duration-300" /></a>
-            <a href="mailto:satyamjoshi@example.com" aria-label="Email"><SiGmail className="hover:text-teal-600 transition-colors duration-300" /></a>
+          <div
+            ref={socialIconsRef}
+            className="flex justify-center gap-8 mt-10 text-3xl text-gray-600"
+          >
+            <a
+              href="https://github.com/Satyam-a-Developer"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FaGithub className="hover:text-teal-600 transition-colors duration-300" />
+            </a>
+            <a
+              href="https://x.com/Satyamjosh44160"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <FaTwitter className="hover:text-teal-600 transition-colors duration-300" />
+            </a>
+            <a
+              href="https://linkedin.com/in/satyam-joshi"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="hover:text-teal-600 transition-colors duration-300" />
+            </a>
+            <a href="mailto:satyamjoshi@example.com" aria-label="Email">
+              <SiGmail className="hover:text-teal-600 transition-colors duration-300" />
+            </a>
           </div>
           <div className="mt-12 space-x-4">
             <button
@@ -316,20 +564,36 @@ export default function Home() {
       {/* About Section */}
       <section id="about" ref={aboutRef} className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">About Me</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
+            About Me
+          </h2>
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="w-full md:w-1/3 flex justify-center">
               <div className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-teal-500 shadow-2xl transform transition-transform duration-500 hover:scale-105">
-                <Image src={profile} alt="Profile" fill className="object-cover" />
+                <Image
+                  src={profile}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
             <div className="w-full md:w-2/3 space-y-6">
-              <h3 className="text-2xl font-semibold text-teal-600">Full Stack Developer & UI/UX Designer</h3>
+              <h3 className="text-2xl font-semibold text-teal-600">
+                Full Stack Developer & UI/UX Designer
+              </h3>
               <p className="text-lg leading-relaxed text-gray-700">
-                I&apos;m Satyam Joshi, a passionate developer dedicated to creating intuitive and impactful web applications. With proficiency in both frontend and backend technologies, I thrive on turning complex challenges into elegant, user-centric solutions.
+                I&apos;m Satyam Joshi, a passionate developer dedicated to
+                creating intuitive and impactful web applications. With
+                proficiency in both frontend and backend technologies, I thrive
+                on turning complex challenges into elegant, user-centric
+                solutions.
               </p>
               <p className="text-lg leading-relaxed text-gray-700">
-                Specializing in modern frameworks like React and Next.js, I design responsive interfaces paired with robust server-side logic to deliver exceptional user experiences across all platforms.
+                Specializing in modern frameworks like React and Next.js, I
+                design responsive interfaces paired with robust server-side
+                logic to deliver exceptional user experiences across all
+                platforms.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
                 <div>
@@ -353,17 +617,24 @@ export default function Home() {
       {/* Skills Section */}
       <section id="skills" ref={skillsRef} className="py-24 bg-teal-50">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">My Skills</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
+            My Skills
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skills.map((skillGroup, index) => (
               <div
                 key={index}
                 className="skill-category bg-white rounded-2xl shadow-lg p-8 transition-transform duration-500 hover:scale-105 border border-teal-200"
               >
-                <h3 className="text-xl font-bold text-teal-600 mb-6">{skillGroup.category}</h3>
+                <h3 className="text-xl font-bold text-teal-600 mb-6">
+                  {skillGroup.category}
+                </h3>
                 <div className="flex flex-wrap gap-3">
                   {skillGroup.items.map((skill, i) => (
-                    <span key={i} className="bg-teal-100 px-4 py-2 rounded-full text-teal-700 text-sm font-medium">
+                    <span
+                      key={i}
+                      className="bg-teal-100 px-4 py-2 rounded-full text-teal-700 text-sm font-medium"
+                    >
                       {skill}
                     </span>
                   ))}
@@ -377,17 +648,28 @@ export default function Home() {
       {/* Projects Section */}
       <section id="projects" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">Featured Projects</h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">A showcase of my recent work blending creativity and technical expertise.</p>
-          <div className="space-y-20">{projects.map((project) => renderProject(project))}</div>
+          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">
+            Featured Projects
+          </h2>
+          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
+            A showcase of my recent work blending creativity and technical
+            expertise.
+          </p>
+          <div className="space-y-20">
+            {projects.map((project) => renderProject(project))}
+          </div>
         </div>
       </section>
 
       {/* Contact Section */}
       <section id="contact" ref={contactRef} className="py-24 bg-teal-50">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">Get In Touch</h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">Let’s collaborate on your next project or just say hello!</p>
+          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">
+            Get In Touch
+          </h2>
+          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
+            Let’s collaborate on your next project or just say hello!
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center border border-teal-200">
               <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -408,16 +690,29 @@ export default function Home() {
                 <FaLinkedin className="text-teal-600 text-2xl" />
               </div>
               <h3 className="font-bold text-lg text-gray-900 mb-2">LinkedIn</h3>
-              <p className="text-gray-600">linkedin.com/in/satyam-joshi-9b8266240/</p>
+              <p className="text-gray-600">
+                linkedin.com/in/satyam-joshi-9b8266240/
+              </p>
             </div>
           </div>
           <div className="bg-white p-10 rounded-2xl shadow-xl border border-teal-200">
-            <h3 className="text-2xl font-bold mb-8 text-center text-gray-900">Send a Message</h3>
-            <form action="https://formsubmit.co/satyampannaballer@gmail.com" method="POST" className="space-y-8">
+            <h3 className="text-2xl font-bold mb-8 text-center text-gray-900">
+              Send a Message
+            </h3>
+            <form
+              action="https://formsubmit.co/satyampannaballer@gmail.com"
+              method="POST"
+              className="space-y-8"
+            >
               <input type="hidden" name="_captcha" value="false" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-gray-700 mb-2 font-medium">Name</label>
+                  <label
+                    htmlFor="name"
+                    className="block text-gray-700 mb-2 font-medium"
+                  >
+                    Name
+                  </label>
                   <input
                     type="text"
                     name="name"
@@ -428,7 +723,12 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-gray-700 mb-2 font-medium">Email</label>
+                  <label
+                    htmlFor="email"
+                    className="block text-gray-700 mb-2 font-medium"
+                  >
+                    Email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -440,7 +740,12 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <label htmlFor="subject" className="block text-gray-700 mb-2 font-medium">Subject</label>
+                <label
+                  htmlFor="subject"
+                  className="block text-gray-700 mb-2 font-medium"
+                >
+                  Subject
+                </label>
                 <input
                   type="text"
                   name="subject"
@@ -451,7 +756,12 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-gray-700 mb-2 font-medium">Message</label>
+                <label
+                  htmlFor="message"
+                  className="block text-gray-700 mb-2 font-medium"
+                >
+                  Message
+                </label>
                 <textarea
                   name="message"
                   id="message"
@@ -480,16 +790,43 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0 text-center md:text-left">
               <h3 className="text-2xl font-bold text-teal-400">Satyam Joshi</h3>
-              <p className="text-gray-400 mt-2 text-lg">Full Stack Developer & UI/UX Designer</p>
+              <p className="text-gray-400 mt-2 text-lg">
+                Full Stack Developer & UI/UX Designer
+              </p>
             </div>
             <div className="flex space-x-8 text-2xl">
-              <a href="https://github.com/Satyam-a-Developer" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub className="hover:text-teal-400 transition-colors duration-300" /></a>
-              <a href="https://x.com/Satyamjosh44160" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter className="hover:text-teal-400 transition-colors duration-300" /></a>
-              <a href="https://www.linkedin.com/in/satyam-joshi-9b8266240/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin className="hover:text-teal-400 transition-colors duration-300" /></a>
-              <a href="mailto:satyam.joshi567@gmail.com" aria-label="Email"><SiGmail className="hover:text-teal-400 transition-colors duration-300" /></a>
+              <a
+                href="https://github.com/Satyam-a-Developer"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <FaGithub className="hover:text-teal-400 transition-colors duration-300" />
+              </a>
+              <a
+                href="https://x.com/Satyamjosh44160"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
+                <FaTwitter className="hover:text-teal-400 transition-colors duration-300" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/satyam-joshi-9b8266240/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="hover:text-teal-400 transition-colors duration-300" />
+              </a>
+              <a href="mailto:satyam.joshi567@gmail.com" aria-label="Email">
+                <SiGmail className="hover:text-teal-400 transition-colors duration-300" />
+              </a>
             </div>
           </div>
-          <p className="text-center text-gray-500 mt-8 text-sm">© 2025 Satyam Joshi. All rights reserved.</p>
+          <p className="text-center text-gray-500 mt-8 text-sm">
+            © 2025 Satyam Joshi. All rights reserved.
+          </p>
         </div>
       </footer>
 
