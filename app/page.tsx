@@ -195,8 +195,8 @@ export default function Home() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      targetX = e.clientX - 30; // Offset to center kitty (half of width)
-      targetY = e.clientY - 30; // Offset to center kitty (half of height)
+      targetX = e.clientX - 100;
+      targetY = e.clientY - 30;
 
       if (!isAnimating) {
         isAnimating = true;
