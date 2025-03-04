@@ -2,7 +2,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { FaArrowUp } from "react-icons/fa";
@@ -74,17 +74,16 @@ const projects: Project[] = [
   {
     id: 3,
     title: "Crypto-exchange",
-    description:
-      "Get way for your cryptocurrency investments",
+    description: "Get way for your cryptocurrency investments",
     image: crypto,
     link: "https://crypto-exchange-plum.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/crypto-exchange",
     altText: "Crypto Interface",
-    techStack: ["Next.js", "CSS","CoinDCX-API"],
+    techStack: ["Next.js", "CSS", "CoinDCX-API"],
     isReversed: false,
   },
   {
-    id:4,
+    id: 4,
     title: "Excel Clone",
     description:
       "A fully functional Excel-like spreadsheet application with formula support and data visualization.",
@@ -129,17 +128,16 @@ const cursorKittyStyles = `
     height: 60px;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s ease-out;
     transform-origin: bottom center;
   }
 
   .cursor-kitty.walking {
-    animation: kittyWalk 0.5s steps(4) infinite;
+    animation: kittyWalk 0.4s steps(4) infinite; /* Slightly faster animation */
   }
 
   @keyframes kittyWalk {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
+    0% { background-position: 0 0; }
+    100% { background-position: -240px 0; }
   }
 `;
 
@@ -160,215 +158,56 @@ export default function Home() {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // Kitty cursor follower
+    const kitty = kittyRef.current;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let prevX = 0;
+    let isAnimating = false;
+
+    const updateKittyPosition = () => {
+      // Smoothly interpolate towards the target
+      currentX += (targetX - currentX) * 0.15; // Adjust speed (0.15 = smoother, slower)
+      currentY += (targetY - currentY) * 0.15;
+
+      if (kitty) {
+        kitty.style.left = `${currentX}px`;
+        kitty.style.top = `${currentY}px`;
+
+        // Flip direction based on movement
+        kitty.style.transform = targetX < prevX ? "scaleX(-1)" : "scaleX(1)";
+        prevX = targetX;
+
+        // Toggle walking state based on movement
+        const isMoving =
+          Math.abs(targetX - currentX) > 1 || Math.abs(targetY - currentY) > 1;
+        setIsKittyWalking(isMoving);
+
+        // Continue animation if still moving
+        if (isMoving) {
+          requestAnimationFrame(updateKittyPosition);
+        } else {
+          isAnimating = false;
+        }
+      }
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (kittyRef.current) {
-        const kitty = kittyRef.current;
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
+      targetX = e.clientX - 30; // Offset to center kitty (half of width)
+      targetY = e.clientY - 30; // Offset to center kitty (half of height)
 
-        // Smooth interpolation
-        const currentX = parseFloat(kitty.style.left || '0');
-        const currentY = parseFloat(kitty.style.top || '0');
-
-        const newX = currentX + (mouseX - 20 - currentX) * 0.1;
-        const newY = currentY + (mouseY - 20 - currentY) * 0.1;
-
-        kitty.style.left = `${newX}px`;
-        kitty.style.top = `${newY}px`;
-
-        // Direction handling
-        const prevX = parseFloat(kitty.dataset.prevX || mouseX.toString());
-        kitty.style.transform = mouseX < prevX ? "scaleX(-1)" : "scaleX(1)";
-        kitty.dataset.prevX = mouseX.toString();
-
-        setIsKittyWalking(true);
+      if (!isAnimating) {
+        isAnimating = true;
+        requestAnimationFrame(updateKittyPosition);
       }
     };
 
-    const handleMouseStop =() => {
-      setIsKittyWalking(false);
-    }
+    window.addEventListener("mousemove", handleMouseMove);
 
-    let timeoutId: NodeJS.Timeout;
-    const handleMouseMoveWithDebounce = (e: MouseEvent) => {
-      clearTimeout(timeoutId);
-      handleMouseMove(e);
-      timeoutId = setTimeout(handleMouseStop, 100);
-    };
-
-    window.addEventListener("mousemove", handleMouseMoveWithDebounce);
-
-    // Existing GSAP animations
-    gsap.fromTo(
-      headerRef.current,
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-    );
-    if (nameRef.current) {
-      gsap.fromTo(
-        nameRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "bounce.out", delay: 0.3 }
-      );
-    }
-    if (socialIconsRef.current) {
-      const icons = Array.from(socialIconsRef.current.children);
-      gsap.from(icons, {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "elastic.out(1, 0.8)",
-        delay: 0.5,
-      });
-      icons.forEach((icon) => {
-        icon.addEventListener("mouseenter", () =>
-          gsap.to(icon, {
-            scale: 1.2,
-            rotation: 10,
-            duration: 0.3,
-            ease: "power2.out",
-          })
-        );
-        icon.addEventListener("mouseleave", () =>
-          gsap.to(icon, {
-            scale: 1,
-            rotation: 0,
-            duration: 0.3,
-            ease: "power2.out",
-          })
-        );
-      });
-    }
-    if (aboutRef.current) {
-      gsap.fromTo(
-        aboutRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: aboutRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-          },
-        }
-      );
-    }
-    if (skillsRef.current) {
-      const skillCategories =
-        skillsRef.current.querySelectorAll(".skill-category");
-      skillCategories.forEach((category, index) => {
-        gsap.fromTo(
-          category,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: index * 0.2,
-            ease: "power2.out",
-            scrollTrigger: { trigger: skillsRef.current, start: "top 80%" },
-          }
-        );
-      });
-    }
-    if (contactRef.current) {
-      gsap.fromTo(
-        contactRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: contactRef.current, start: "top 80%" },
-        }
-      );
-    }
-    projectRefs.current.forEach((project, index) => {
-      if (project) {
-        const image = project.querySelector(".project-image");
-        const content = project.querySelector(".project-content");
-        const direction = index % 2 === 0 ? -1 : 1;
-        gsap.fromTo(
-          project,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: project,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-        gsap.fromTo(
-          image,
-          { x: direction * 50, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: project,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-        gsap.fromTo(
-          content,
-          { x: -direction * 50, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.4,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: project,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    });
-    const sections = ["home", "about", "projects", "skills", "contact"];
-    sections.forEach((section) => {
-      const element = document.getElementById(section);
-      if (element) {
-        ScrollTrigger.create({
-          trigger: element,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => setActiveSection(section),
-          onEnterBack: () => setActiveSection(section),
-        });
-      }
-    });
-
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
+    // Cleanup
     return () => {
-      window.removeEventListener("mousemove", handleMouseMoveWithDebounce);
-      clearTimeout(timeoutId);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -448,13 +287,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative">
       {/* Kitty cursor follower */}
-      <img
+      <Image
         ref={kittyRef}
-        src={kittyWalking.src}
+        src={kittyWalking}
+        width={60}
+        height={60}
         alt="Cursor following kitty"
         className={`cursor-kitty ${isKittyWalking ? "walking" : ""}`}
+        unoptimized
       />
-      <style jsx global>{cursorKittyStyles}</style>
+      <style jsx global>
+        {cursorKittyStyles}
+      </style>
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 shadow-[1px_25px_59px_-6px_rgba(34,_197,_94,_0.5)]">
@@ -580,7 +424,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Hey, I'm{" "}
+            Hey, I&rsquo;m{" "}
             <span ref={nameRef} className="text-teal-600">
               Satyam Joshi
             </span>
@@ -660,7 +504,7 @@ export default function Home() {
                 Full Stack Developer & UI/UX Designer
               </h3>
               <p className="text-lg leading-relaxed text-gray-700">
-                I'm Satyam Joshi, a passionate developer dedicated to
+                I&rsquo;m Satyam Joshi, a passionate developer dedicated to
                 creating intuitive and impactful web applications. With
                 proficiency in both frontend and backend technologies, I thrive
                 on turning complex challenges into elegant, user-centric
