@@ -2,10 +2,10 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import { FaArrowUp } from "react-icons/fa"; // New icon for Back to Top
+import { FaArrowUp } from "react-icons/fa";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import dsasorting from "../public/dsasorting.png";
@@ -15,6 +15,9 @@ import financeGo from "../public/FinanceGo.png";
 import gamble from "../public/gamble.png";
 import crypto from "../public/Crypto-exchange.png";
 import profile from "../public/profile.jpeg";
+
+// Add this (make sure to add kitty-walking.gif to your public folder)
+import kittyWalking from "../public/kitty-walking.gif";
 
 // Project interface
 interface Project {
@@ -118,6 +121,28 @@ const projects: Project[] = [
   },
 ];
 
+// Kitty CSS styles
+const cursorKittyStyles = `
+  .cursor-kitty {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+    transform-origin: bottom center;
+  }
+
+  .cursor-kitty.walking {
+    animation: kittyWalk 0.5s steps(4) infinite;
+  }
+
+  @keyframes kittyWalk {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+`;
+
 export default function Home() {
   const nameRef = useRef<HTMLSpanElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -126,12 +151,54 @@ export default function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+  const kittyRef = useRef<HTMLImageElement>(null);
   const [activeSection, setActiveSection] = useState("home");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [isKittyWalking, setIsKittyWalking] = useState(false);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+    // Kitty cursor follower
+    const handleMouseMove = (e: MouseEvent) => {
+      if (kittyRef.current) {
+        const kitty = kittyRef.current;
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        // Smooth interpolation
+        const currentX = parseFloat(kitty.style.left || '0');
+        const currentY = parseFloat(kitty.style.top || '0');
+
+        const newX = currentX + (mouseX - 20 - currentX) * 0.1;
+        const newY = currentY + (mouseY - 20 - currentY) * 0.1;
+
+        kitty.style.left = `${newX}px`;
+        kitty.style.top = `${newY}px`;
+
+        // Direction handling
+        const prevX = parseFloat(kitty.dataset.prevX || mouseX.toString());
+        kitty.style.transform = mouseX < prevX ? "scaleX(-1)" : "scaleX(1)";
+        kitty.dataset.prevX = mouseX.toString();
+
+        setIsKittyWalking(true);
+      }
+    };
+
+    const handleMouseStop =() => {
+      setIsKittyWalking(false);
+    }
+
+    let timeoutId: NodeJS.Timeout;
+    const handleMouseMoveWithDebounce = (e: MouseEvent) => {
+      clearTimeout(timeoutId);
+      handleMouseMove(e);
+      timeoutId = setTimeout(handleMouseStop, 100);
+    };
+
+    window.addEventListener("mousemove", handleMouseMoveWithDebounce);
+
+    // Existing GSAP animations
     gsap.fromTo(
       headerRef.current,
       { y: -100, opacity: 0 },
@@ -288,7 +355,6 @@ export default function Home() {
       }
     });
 
-    // Back to Top button visibility
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowBackToTop(true);
@@ -299,6 +365,8 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
+      window.removeEventListener("mousemove", handleMouseMoveWithDebounce);
+      clearTimeout(timeoutId);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       window.removeEventListener("scroll", handleScroll);
     };
@@ -378,7 +446,16 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative ">
+    <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative">
+      {/* Kitty cursor follower */}
+      <img
+        ref={kittyRef}
+        src={kittyWalking.src}
+        alt="Cursor following kitty"
+        className={`cursor-kitty ${isKittyWalking ? "walking" : ""}`}
+      />
+      <style jsx global>{cursorKittyStyles}</style>
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 shadow-[1px_25px_59px_-6px_rgba(34,_197,_94,_0.5)]">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -503,7 +580,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto px-6">
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Hey, I&apos;m{" "}
+            Hey, I'm{" "}
             <span ref={nameRef} className="text-teal-600">
               Satyam Joshi
             </span>
@@ -583,7 +660,7 @@ export default function Home() {
                 Full Stack Developer & UI/UX Designer
               </h3>
               <p className="text-lg leading-relaxed text-gray-700">
-                I&apos;m Satyam Joshi, a passionate developer dedicated to
+                I'm Satyam Joshi, a passionate developer dedicated to
                 creating intuitive and impactful web applications. With
                 proficiency in both frontend and backend technologies, I thrive
                 on turning complex challenges into elegant, user-centric
