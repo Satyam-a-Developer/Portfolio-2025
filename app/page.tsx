@@ -156,7 +156,8 @@ export default function Home() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
+    setActiveSection("home");
+    setShowBackToTop(false);
     // Kitty cursor follower
     const kitty = kittyRef.current;
     let targetX = 0;
