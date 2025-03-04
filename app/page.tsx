@@ -169,8 +169,8 @@ export default function Home() {
 
     const updateKittyPosition = () => {
       // Smoothly interpolate towards the target
-      currentX += (targetX - currentX) * 0.15; // Adjust speed (0.15 = smoother, slower)
-      currentY += (targetY - currentY) * 0.15;
+      currentX += (targetX - currentX) * 0.02;
+      currentY += (targetY - currentY) * 0.02;
 
       if (kitty) {
         kitty.style.left = `${currentX}px`;
