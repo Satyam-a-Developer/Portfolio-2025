@@ -112,7 +112,7 @@ const projects: Project[] = [
     description:
       "A personal finance management tool with budgeting, investment tracking, and expense analysis features.",
     image: financeGo,
-    link: "https://excel-sheet-fby2.vercel.app/",
+    link: "https://finance-go-frontend.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/Finance-Go",
     altText: "Finance Management Dashboard",
     techStack: ["Next.js", "Chart.js", "MongoDB"],
