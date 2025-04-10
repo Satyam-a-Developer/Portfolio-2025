@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { FaTwitter, FaGithub, FaLinkedin, FaArrowUp, FaExternalLinkAlt, FaCode, FaStar } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import { MdFilterList, MdSearch } from "react-icons/md";
+import { MdSearch } from "react-icons/md";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import dsasorting from "../public/dsasorting.png";
@@ -248,16 +248,16 @@ const notionStyles = `
 `;
 
 // Optimized debounce utility with useCallback
-function useDebounce<T extends (...args: any[]) => void>(callback: T, delay: number) {
+function useDebounce<T extends (arg: string) => void>(callback: T, delay: number) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  return useCallback((...args: Parameters<T>) => {
+
+  return useCallback((arg: Parameters<T>[0]) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
+
     timeoutRef.current = setTimeout(() => {
-      callback(...args);
+      callback(arg);
       timeoutRef.current = null;
     }, delay);
   }, [callback, delay]);
@@ -503,7 +503,7 @@ export default function Home() {
                 />
               </div>
               <p className="text-gray-600">
-                I'm Satyam Joshi, a Full Stack Developer and UI/UX enthusiast, dedicated to crafting seamless, innovative web solutions that push the boundaries of technology and design.
+                I&apos;m Satyam Joshi, a Full Stack Developer and UI/UX enthusiast, dedicated to crafting seamless, innovative web solutions that push the boundaries of technology and design.
               </p>
             </div>
           </div>
