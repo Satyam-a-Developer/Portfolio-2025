@@ -145,7 +145,7 @@ export default function Home() {
     // Scroll-based active section and back-to-top button
     const sections = ["home", "about", "projects", "skills", "contact"];
     ScrollTrigger.create({
-      onUpdate: (self) => {
+      onUpdate: () => {
         const scrollY = window.scrollY;
         setShowBackToTop(scrollY > 300);
         sections.forEach((section) => {
