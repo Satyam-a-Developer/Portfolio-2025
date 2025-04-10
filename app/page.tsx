@@ -3,9 +3,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin";
 import { useRef, useEffect, useState } from "react";
-import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaTwitter, FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-import { FaArrowUp } from "react-icons/fa";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 import dsasorting from "../public/dsasorting.png";
@@ -15,8 +14,6 @@ import financeGo from "../public/FinanceGo.png";
 import gamble from "../public/gamble.png";
 import crypto from "../public/Crypto-exchange.png";
 import profile from "../public/profile.jpeg";
-
-// Add this (make sure to add kitty-walking.gif to your public folder)
 import kittyWalking from "../public/kitty-walking.gif";
 
 // Project interface
@@ -34,14 +31,8 @@ interface Project {
 
 // Skills data
 const skills = [
-  {
-    category: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Redux"],
-  },
-  {
-    category: "Backend",
-    items: ["Node.js", "Express", "MongoDB", "Superbase"],
-  },
+  { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Redux"] },
+  { category: "Backend", items: ["Node.js", "Express", "MongoDB", "Supabase"] },
   { category: "Tools", items: ["Git", "Figma", "VS Code", "Vercel", "Docker"] },
 ];
 
@@ -50,20 +41,18 @@ const projects: Project[] = [
   {
     id: 1,
     title: "Notes App",
-    description:
-      "A comprehensive productivity tool featuring notes, notebooks, and todo lists with real-time synchronization.",
+    description: "A comprehensive productivity tool featuring notes, notebooks, and todo lists with real-time synchronization.",
     image: notes,
     link: "https://notesappprivate-mjzu.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/Notes-App",
     altText: "Notes Application Interface",
-    techStack: ["Next-JS", "TypeScript", "Superbase", "TailwindCSS"],
+    techStack: ["Next.js", "TypeScript", "Supabase", "TailwindCSS"],
     isReversed: false,
   },
   {
     id: 2,
     title: "Gamble Project",
-    description:
-      "An interactive gambling application with multiple games and a sleek user interface.",
+    description: "An interactive gambling application with multiple games and a sleek user interface.",
     image: gamble,
     link: "https://bubble-gamble.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/Gamble-Project",
@@ -74,7 +63,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "Crypto-exchange",
-    description: "Get way for your cryptocurrency investments",
+    description: "Gateway for your cryptocurrency investments.",
     image: crypto,
     link: "https://crypto-exchange-plum.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/crypto-exchange",
@@ -85,20 +74,18 @@ const projects: Project[] = [
   {
     id: 4,
     title: "Excel Clone",
-    description:
-      "A fully functional Excel-like spreadsheet application with formula support and data visualization.",
+    description: "A fully functional Excel-like spreadsheet application with formula support and data visualization.",
     image: excel,
     link: "https://excel-sheet-344l.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/Excel-Sheet",
     altText: "Spreadsheet Application",
-    techStack: ["Next-JS", "CSS Grid", "TailwindCSS"],
+    techStack: ["Next.js", "CSS Grid", "TailwindCSS"],
     isReversed: true,
   },
   {
     id: 5,
     title: "DSA Sorting Visualizer",
-    description:
-      "An educational tool that visualizes various sorting algorithms with step-by-step animations.",
+    description: "An educational tool that visualizes various sorting algorithms with step-by-step animations.",
     image: dsasorting,
     link: "https://dsa-sorting-algo-lo71tt.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/DSA-Sorting-Algo",
@@ -109,8 +96,7 @@ const projects: Project[] = [
   {
     id: 6,
     title: "FinanceGo",
-    description:
-      "A personal finance management tool with budgeting, investment tracking, and expense analysis features.",
+    description: "A personal finance management tool with budgeting, investment tracking, and expense analysis features.",
     image: financeGo,
     link: "https://finance-go-frontend.vercel.app/",
     github: "https://github.com/Satyam-a-Developer/Finance-Go",
@@ -120,73 +106,82 @@ const projects: Project[] = [
   },
 ];
 
-// Kitty CSS styles
+// Updated Kitty Cursor Styles
 const cursorKittyStyles = `
   .cursor-kitty {
     position: fixed;
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     pointer-events: none;
     z-index: 9999;
-    transform-origin: bottom center;
+    transition: transform 0.2s ease;
   }
-
   .cursor-kitty.walking {
-    animation: kittyWalk 0.4s steps(4) infinite; /* Slightly faster animation */
+    animation: kittyWalk 0.3s steps(4) infinite;
   }
-
+  .cursor-kitty:hover {
+    transform: scale(1.2) rotate(10deg);
+  }
   @keyframes kittyWalk {
     0% { background-position: 0 0; }
-    100% { background-position: -240px 0; }
+    100% { background-position: -280px 0; }
   }
 `;
 
 export default function Home() {
-  const nameRef = useRef<HTMLSpanElement>(null);
+  const [isKittyWalking, setIsKittyWalking] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const kittyRef = useRef<HTMLImageElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const socialIconsRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  const kittyRef = useRef<HTMLImageElement>(null);
-  const [activeSection, setActiveSection] = useState("home");
-  const [showBackToTop, setShowBackToTop] = useState(false);
-  const [isKittyWalking, setIsKittyWalking] = useState(false);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-    setActiveSection("home");
-    setShowBackToTop(false);
-    // Kitty cursor follower
+
+    // Scroll-based active section and back-to-top button
+    const sections = ["home", "about", "projects", "skills", "contact"];
+    ScrollTrigger.create({
+      onUpdate: (self) => {
+        const scrollY = window.scrollY;
+        setShowBackToTop(scrollY > 300);
+        sections.forEach((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            const { top, bottom } = element.getBoundingClientRect();
+            if (top <= 100 && bottom >= 100) setActiveSection(section);
+          }
+        });
+      },
+    });
+
+    // Kitty cursor logic
     const kitty = kittyRef.current;
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let prevX = 0;
+    let targetX = 0,
+      targetY = 0,
+      currentX = 0,
+      currentY = 0,
+      prevX = 0;
     let isAnimating = false;
 
     const updateKittyPosition = () => {
-      // Smoothly interpolate towards the target
-      currentX += (targetX - currentX) * 0.02;
-      currentY += (targetY - currentY) * 0.02;
-
+      currentX += (targetX - currentX) * 0.1;
+      currentY += (targetY - currentY) * 0.1;
       if (kitty) {
         kitty.style.left = `${currentX}px`;
         kitty.style.top = `${currentY}px`;
-
-        // Flip direction based on movement
         kitty.style.transform = targetX < prevX ? "scaleX(-1)" : "scaleX(1)";
         prevX = targetX;
-
-        // Toggle walking state based on movement
-        const isMoving =
-          Math.abs(targetX - currentX) > 1 || Math.abs(targetY - currentY) > 1;
-        setIsKittyWalking(isMoving);
-
-        // Continue animation if still moving
-        if (isMoving) {
+        setIsKittyWalking(
+          Math.abs(targetX - currentX) > 1 || Math.abs(targetY - currentY) > 1
+        );
+        if (
+          Math.abs(targetX - currentX) > 0.5 ||
+          Math.abs(targetY - currentY) > 0.5
+        ) {
           requestAnimationFrame(updateKittyPosition);
         } else {
           isAnimating = false;
@@ -195,9 +190,8 @@ export default function Home() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      targetX = e.clientX - 100;
-      targetY = e.clientY - 30;
-
+      targetX = e.clientX - 35;
+      targetY = e.clientY - 35;
       if (!isAnimating) {
         isAnimating = true;
         requestAnimationFrame(updateKittyPosition);
@@ -205,23 +199,25 @@ export default function Home() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const scrollToSection = (id: string) => {
     gsap.to(window, {
-      duration: 1,
+      duration: 1.2,
       scrollTo: { y: `#${id}`, offsetY: 50 },
-      ease: "power3.inOut",
+      ease: "power4.inOut",
     });
+    setActiveSection(id);
   };
 
   const scrollToTop = () => {
-    gsap.to(window, { duration: 1, scrollTo: { y: 0 }, ease: "power3.inOut" });
+    gsap.to(window, {
+      duration: 1.2,
+      scrollTo: { y: 0 },
+      ease: "power4.inOut",
+    });
+    setActiveSection("home");
   };
 
   const addToRefs = (el: HTMLDivElement | null) => {
@@ -232,50 +228,42 @@ export default function Home() {
     <div
       key={project.id}
       ref={addToRefs}
-      className={`project-card flex flex-col lg:flex-row ${
+      className={`project-card relative flex flex-col lg:flex-row ${
         project.isReversed ? "lg:flex-row-reverse" : ""
-      } items-center gap-12 mb-24 p-8 rounded-2xl transition-all duration-500 hover:shadow-xl bg-white`}
+      } items-center gap-12 p-10 rounded-3xl bg-opacity-80 backdrop-blur-lg hover:shadow-2xl transition-all duration-700`}
+      style={{ background: "rgba(30, 30, 40, 0.9)" }}
     >
-      <div className="relative w-full lg:w-[500px] h-[320px] group project-image overflow-hidden rounded-xl shadow-lg">
-        <Image
-          src={project.image}
-          alt={project.altText}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-teal-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
-          <div className="flex gap-4">
+      <div className="relative w-full lg:w-[550px] h-[350px] group project-image rounded-2xl overflow-hidden shadow-xl transform transition-transform duration-500 hover:rotate-2">
+        <Image src={project.image} alt={project.altText} fill className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/50 to-teal-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-6">
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-teal-600 px-6 py-2 rounded-full font-bold hover:bg-teal-600 hover:text-white transition-all duration-300"
+          >
+            Live Demo
+          </a>
+          {project.github && (
             <a
-              href={project.link}
+              href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-teal-500 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-teal-600 transition-all duration-300 shadow-md"
+              className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold hover:bg-purple-600 hover:text-white transition-all duration-300"
             >
-              Live Demo
+              View Code
             </a>
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gray-700 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-300 shadow-md"
-              >
-                View Code
-              </a>
-            )}
-          </div>
+          )}
         </div>
       </div>
-      <div className="flex-1 space-y-5 project-content">
-        <h2 className="text-3xl font-bold text-gray-900">{project.title}</h2>
-        <p className="text-gray-700 leading-relaxed text-lg">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-3">
+      <div className="flex-1 space-y-6">
+        <h2 className="text-4xl font-extrabold text-white">{project.title}</h2>
+        <p className="text-lg leading-relaxed text-gray-300">{project.description}</p>
+        <div className="flex flex-wrap gap-4">
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-4 py-1.5 bg-teal-100 text-teal-800 rounded-full text-sm font-medium"
+              className="px-5 py-2 bg-gradient-to-r from-teal-400 to-purple-500 text-white rounded-full text-sm font-semibold shadow-md"
             >
               {tech}
             </span>
@@ -286,39 +274,40 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 font-sans relative">
-      {/* Kitty cursor follower */}
+    <div className="min-h-screen bg-gray-900 text-white font-sans">
+      {/* Kitty Cursor */}
       <Image
         ref={kittyRef}
         src={kittyWalking}
-        width={60}
-        height={60}
-        alt="Cursor following kitty"
+        width={70}
+        height={70}
+        alt="Cursor kitty"
         className={`cursor-kitty ${isKittyWalking ? "walking" : ""}`}
         unoptimized
       />
-      <style jsx global>
-        {cursorKittyStyles}
-      </style>
+      <style jsx global>{cursorKittyStyles}</style>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 py-4 shadow-[1px_25px_59px_-6px_rgba(34,_197,_94,_0.5)]">
+      <nav className="fixed top-0 w-full bg-gray-800/90 backdrop-blur-lg z-40 py-5 shadow-lg">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <a href="#" className="text-2xl font-extrabold text-teal-600">
+          <a
+            href="#"
+            className="text-3xl font-extrabold bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent"
+          >
             Satyam Joshi
           </a>
-          <div className="hidden md:flex items-center space-x-10">
+          <div className="hidden md:flex space-x-12">
             {["home", "about", "projects", "skills", "contact"].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
-                className={`capitalize text-lg font-medium ${
+                className={`text-lg font-semibold ${
                   activeSection === item
-                    ? "text-teal-600"
-                    : "text-gray-600 hover:text-teal-600"
-                } transition-colors duration-300`}
+                    ? "text-teal-400"
+                    : "text-gray-300 hover:text-teal-400"
+                } transition-all duration-300`}
               >
-                {item}
+                {item.charAt(0).toUpperCase() + item.slice(1)}
               </button>
             ))}
           </div>
@@ -326,14 +315,14 @@ export default function Home() {
       </nav>
 
       {/* Mobile Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-white/90 backdrop-blur-lg z-50 shadow-[0_-4px_15px_rgba(0,0,0,0.1)]">
+      <div className="fixed bottom-0 left-0 right-0 md:hidden bg-gray-800/90 backdrop-blur-lg z-50 shadow-[0_-4px_15px_rgba(0,0,0,0.1)]">
         <div className="flex justify-around py-4">
           {["home", "about", "projects", "skills", "contact"].map((item) => (
             <button
               key={item}
               onClick={() => scrollToSection(item)}
               className={`flex flex-col items-center ${
-                activeSection === item ? "text-teal-600" : "text-gray-500"
+                activeSection === item ? "text-teal-400" : "text-gray-300"
               } transition-colors duration-300`}
             >
               {item === "home" && (
@@ -417,145 +406,105 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Header Section */}
+      {/* Header */}
       <header
-        ref={headerRef}
         id="home"
-        className="pt-36 pb-28 text-center bg-gradient-to-b from-teal-50 to-gray-100"
+        ref={headerRef}
+        className="pt-40 pb-32 text-center bg-gradient-to-br from-teal-600 via-purple-700 to-gray-900"
       >
         <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            Hey, I&rsquo;m{" "}
-            <span ref={nameRef} className="text-teal-600">
-              Satyam Joshi
-            </span>
+          <h1 className="text-6xl md:text-8xl font-extrabold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white animate-pulse">
+            Satyam Joshi
           </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto text-gray-700 font-light leading-relaxed">
-            Crafting seamless digital experiences as a Full Stack Developer &
-            UI/UX Designer
+          <p className="text-2xl md:text-3xl text-gray-200 font-light max-w-3xl mx-auto">
+            Architect of <span className="font-bold text-teal-300">Cutting-Edge</span> Digital Solutions
           </p>
-          <div
-            ref={socialIconsRef}
-            className="flex justify-center gap-8 mt-10 text-3xl text-gray-600"
-          >
-            <a
-              href="https://github.com/Satyam-a-Developer"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-            >
-              <FaGithub className="hover:text-teal-600 transition-colors duration-300" />
+          <div className="flex justify-center gap-10 mt-12 text-4xl text-gray-200">
+            <a href="https://github.com/Satyam-a-Developer" target="_blank" rel="noopener noreferrer">
+              <FaGithub className="hover:text-teal-300 hover:scale-125 transition-all duration-300" />
             </a>
-            <a
-              href="https://x.com/Satyamjosh44160"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-            >
-              <FaTwitter className="hover:text-teal-600 transition-colors duration-300" />
+            <a href="https://x.com/Satyamjosh44160" target="_blank" rel="noopener noreferrer">
+              <FaTwitter className="hover:text-teal-300 hover:scale-125 transition-all duration-300" />
             </a>
-            <a
-              href="https://linkedin.com/in/satyam-joshi"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin className="hover:text-teal-600 transition-colors duration-300" />
+            <a href="https://linkedin.com/in/satyam-joshi-9b8266240/" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin className="hover:text-teal-300 hover:scale-125 transition-all duration-300" />
             </a>
-            <a href="mailto:satyamjoshi@example.com" aria-label="Email">
-              <SiGmail className="hover:text-teal-600 transition-colors duration-300" />
+            <a href="mailto:satyamjoshi567@gmail.com">
+              <SiGmail className="hover:text-teal-300 hover:scale-125 transition-all duration-300" />
             </a>
           </div>
-          <div className="mt-12 space-x-4">
+          <div className="mt-12 space-x-6">
             <button
               onClick={() => scrollToSection("projects")}
-              className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-teal-600/40"
+              className="bg-gradient-to-r from-teal-500 to-purple-600 text-white font-bold py-3 px-10 rounded-full hover:scale-105 transition-all duration-300 shadow-lg"
             >
-              Explore Projects
+              Discover Projects
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="bg-transparent border-2 border-teal-600 text-teal-600 font-semibold py-3 px-10 rounded-full transition-all duration-300 hover:bg-teal-600 hover:text-white"
+              className="border-2 border-teal-300 text-teal-300 font-bold py-3 px-10 rounded-full hover:bg-teal-300 hover:text-gray-900 transition-all duration-300"
             >
-              Get in Touch
+              Connect With Me
             </button>
           </div>
         </div>
       </header>
 
-      {/* About Section */}
-      <section id="about" ref={aboutRef} className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
-            About Me
-          </h2>
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="w-full md:w-1/3 flex justify-center">
-              <div className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-teal-500 shadow-2xl transform transition-transform duration-500 hover:scale-105">
-                <Image
-                  src={profile}
-                  alt="Profile"
-                  fill
-                  className="object-cover"
-                />
+      {/* About */}
+      <section id="about" ref={aboutRef} className="py-28 bg-gray-800">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-16 items-center">
+          <div className="relative w-80 h-80 rounded-3xl overflow-hidden shadow-2xl transform hover:rotate-3 transition-transform duration-500">
+            <Image src={profile} alt="Profile" fill className="object-cover" />
+          </div>
+          <div className="space-y-6">
+            <h2 className="text-5xl font-extrabold bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent">
+              About Me
+            </h2>
+            <p className="text-xl leading-relaxed text-gray-300">
+              I’m Satyam Joshi, a Full Stack Developer and UI/UX enthusiast, dedicated to crafting seamless, innovative web solutions that push the boundaries of technology and design.
+            </p>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="p-4 rounded-xl bg-gray-700/50">
+                <h4 className="font-bold text-teal-300">Education</h4>
+                <p className="text-gray-400">B.Tech CS</p>
               </div>
-            </div>
-            <div className="w-full md:w-2/3 space-y-6">
-              <h3 className="text-2xl font-semibold text-teal-600">
-                Full Stack Developer & UI/UX Designer
-              </h3>
-              <p className="text-lg leading-relaxed text-gray-700">
-                I&rsquo;m Satyam Joshi, a passionate developer dedicated to
-                creating intuitive and impactful web applications. With
-                proficiency in both frontend and backend technologies, I thrive
-                on turning complex challenges into elegant, user-centric
-                solutions.
-              </p>
-              <p className="text-lg leading-relaxed text-gray-700">
-                Specializing in modern frameworks like React and Next.js, I
-                design responsive interfaces paired with robust server-side
-                logic to deliver exceptional user experiences across all
-                platforms.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-                <div>
-                  <h4 className="font-semibold text-gray-900">Education</h4>
-                  <p className="text-gray-600">B.Tech in Computer Science</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">State</h4>
-                  <p className="text-gray-600">Gujarat</p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900">Location</h4>
-                  <p className="text-gray-600">India</p>
-                </div>
+              <div className="p-4 rounded-xl bg-gray-700/50">
+                <h4 className="font-bold text-teal-300">State</h4>
+                <p className="text-gray-400">Gujarat</p>
+              </div>
+              <div className="p-4 rounded-xl bg-gray-700/50">
+                <h4 className="font-bold text-teal-300">Location</h4>
+                <p className="text-gray-400">India</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" ref={skillsRef} className="py-24 bg-teal-50">
+      {/* Skills */}
+      <section
+        id="skills"
+        ref={skillsRef}
+        className="py-28 bg-gradient-to-b from-gray-800 to-gray-900"
+      >
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
-            My Skills
+          <h2 className="text-5xl font-extrabold text-center bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent mb-16">
+            Skill Set
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {skills.map((skillGroup, index) => (
               <div
                 key={index}
-                className="skill-category bg-white rounded-2xl shadow-lg p-8 transition-transform duration-500 hover:scale-105 border border-teal-200"
+                className="p-8 rounded-3xl bg-gray-700/50 backdrop-blur-lg shadow-xl hover:shadow-teal-500/30 transition-all duration-500"
               >
-                <h3 className="text-xl font-bold text-teal-600 mb-6">
+                <h3 className="text-2xl font-bold text-teal-400 mb-6">
                   {skillGroup.category}
                 </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skillGroup.items.map((skill, i) => (
+                <div className="flex flex-wrap gap-4">
+                  {skillGroup.items.map((skill) => (
                     <span
-                      key={i}
-                      className="bg-teal-100 px-4 py-2 rounded-full text-teal-700 text-sm font-medium"
+                      key={skill}
+                      className="px-5 py-2 bg-teal-500/20 text-teal-300 rounded-full text-sm font-medium hover:bg-teal-500/40 transition-all duration-300"
                     >
                       {skill}
                     </span>
@@ -567,60 +516,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-24 bg-white">
+      {/* Projects */}
+      <section id="projects" className="py-28 bg-gray-800">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">
-            Featured Projects
+          <h2 className="text-5xl font-extrabold text-center bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent mb-16">
+            Project Showcase
           </h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
-            A showcase of my recent work blending creativity and technical
-            expertise.
-          </p>
-          <div className="space-y-20">
+          <div className="space-y-24">
             {projects.map((project) => renderProject(project))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" ref={contactRef} className="py-24 bg-teal-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-6 text-center text-gray-900">
-            Get In Touch
+      {/* Contact */}
+      <section
+        id="contact"
+        ref={contactRef}
+        className="py-28 bg-gray-900"
+      >
+        <div className="max-w-6xl mx-auto px-6 text-white">
+          <h2 className="text-5xl font-extrabold text-center mb-16">
+            Let’s Collaborate
           </h2>
-          <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
-            Let’s collaborate on your next project or just say hello!
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center border border-teal-200">
-              <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <SiGmail className="text-teal-600 text-2xl" />
-              </div>
-              <h3 className="font-bold text-lg text-gray-900 mb-2">Email</h3>
-              <p className="text-gray-600">satyamjoshi567@gmail.com</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center border border-teal-200">
-              <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaTwitter className="text-teal-600 text-2xl" />
-              </div>
-              <h3 className="font-bold text-lg text-gray-900 mb-2">Twitter</h3>
-              <p className="text-gray-600">@Satyamjosh44160</p>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-center border border-teal-200">
-              <div className="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FaLinkedin className="text-teal-600 text-2xl" />
-              </div>
-              <h3 className="font-bold text-lg text-gray-900 mb-2">LinkedIn</h3>
-              <p className="text-gray-600">
-                linkedin.com/in/satyam-joshi-9b8266240/
-              </p>
-            </div>
-          </div>
-          <div className="bg-white p-10 rounded-2xl shadow-xl border border-teal-200">
-            <h3 className="text-2xl font-bold mb-8 text-center text-gray-900">
-              Send a Message
-            </h3>
+          <div className="bg-gray-800/50 p-10 rounded-3xl backdrop-blur-lg">
             <form
               action="https://formsubmit.co/satyampannaballer@gmail.com"
               method="POST"
@@ -628,138 +546,87 @@ export default function Home() {
             >
               <input type="hidden" name="_captcha" value="false" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-gray-700 mb-2 font-medium"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="w-full px-5 py-3 rounded-lg border border-teal-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors duration-300"
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-700 mb-2 font-medium"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="w-full px-5 py-3 rounded-lg border border-teal-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors duration-300"
-                    placeholder="Your email"
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-gray-700 mb-2 font-medium"
-                >
-                  Subject
-                </label>
                 <input
                   type="text"
-                  name="subject"
-                  id="subject"
-                  className="w-full px-5 py-3 rounded-lg border border-teal-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors duration-300"
-                  placeholder="Subject"
+                  name="name"
+                  placeholder="Name"
+                  className="p-4 rounded-xl bg-gray-700/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 outline-none"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="p-4 rounded-xl bg-gray-700/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 outline-none"
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-gray-700 mb-2 font-medium"
-                >
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  rows={5}
-                  className="w-full px-5 py-3 rounded-lg border border-teal-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors duration-300"
-                  placeholder="Your message"
-                  required
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-teal-600/40"
-                >
-                  Send Message
-                </button>
-              </div>
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                className="w-full p-4 rounded-xl bg-gray-700/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 outline-none"
+                required
+              />
+              <textarea
+                name="message"
+                rows={5}
+                placeholder="Your Message"
+                className="w-full p-4 rounded-xl bg-gray-700/50 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-400 outline-none"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full py-4 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-bold rounded-full hover:scale-105 transition-all duration-300 shadow-lg"
+              >
+                Send Message
+              </button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0 text-center md:text-left">
-              <h3 className="text-2xl font-bold text-teal-400">Satyam Joshi</h3>
-              <p className="text-gray-400 mt-2 text-lg">
-                Full Stack Developer & UI/UX Designer
-              </p>
-            </div>
-            <div className="flex space-x-8 text-2xl">
-              <a
-                href="https://github.com/Satyam-a-Developer"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <FaGithub className="hover:text-teal-400 transition-colors duration-300" />
-              </a>
-              <a
-                href="https://x.com/Satyamjosh44160"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-              >
-                <FaTwitter className="hover:text-teal-400 transition-colors duration-300" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/satyam-joshi-9b8266240/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin className="hover:text-teal-400 transition-colors duration-300" />
-              </a>
-              <a href="mailto:satyam.joshi567@gmail.com" aria-label="Email">
-                <SiGmail className="hover:text-teal-400 transition-colors duration-300" />
-              </a>
-            </div>
-          </div>
-          <p className="text-center text-gray-500 mt-8 text-sm">
-            © 2025 Satyam Joshi. All rights reserved.
-          </p>
+      <footer className="py-12 bg-gray-900 text-white text-center">
+        <h3 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-purple-500 bg-clip-text text-transparent">
+          Satyam Joshi
+        </h3>
+        <p className="mt-4 text-gray-400">© 2025. Crafted with Code & Creativity.</p>
+        <div className="flex justify-center gap-8 mt-6 text-2xl">
+          <a
+            href="https://github.com/Satyam-a-Developer"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="hover:text-teal-400 transition-colors duration-300" />
+          </a>
+          <a
+            href="https://x.com/Satyamjosh44160"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaTwitter className="hover:text-teal-400 transition-colors duration-300" />
+          </a>
+          <a
+            href="https://linkedin.com/in/satyam-joshi-9b8266240/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaLinkedin className="hover:text-teal-400 transition-colors duration-300" />
+          </a>
+          <a href="mailto:satyamjoshi567@gmail.com">
+            <SiGmail className="hover:text-teal-400 transition-colors duration-300" />
+          </a>
         </div>
       </footer>
 
-      {/* Back to Top Button */}
+      {/* Back to Top */}
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 bg-teal-600 text-white p-4 rounded-full shadow-lg hover:bg-teal-700 transition-all duration-300 transform hover:scale-110 z-50"
-          aria-label="Back to Top"
+          className="fixed bottom-10 right-10 bg-gradient-to-r from-teal-500 to-purple-600 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 z-50"
         >
-          <FaArrowUp className="h-6 w-6" />
+          <FaArrowUp />
         </button>
       )}
     </div>
